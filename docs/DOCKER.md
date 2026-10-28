@@ -27,14 +27,16 @@ docker compose down        # يوقف بلا ما يمسح البيانات
 docker compose down -v     # يوقف ويمسح بيانات Postgres — انتبه
 ```
 
-## ملاحظة مهمة بصراحة
+## ملاحظة مهمة — v2
+في v2، أول `docker compose up --build` كيسكافولدي Laravel بوحدو داخل
+الكونتينر (Composer create-project + overlay ديال المشروع + Sanctum/Filament)،
+ومن بعد كيدير migrate --seed و serve. أول تشغيل كياخد دقائق (تحميل Laravel)،
+ومن بعد كيخدم عادي. ما بقاش خاصك تسكافولدي يدويا قبل Docker.
+للتطوير بلا Docker، استعمل `scripts/setup-laravel.sh` (شوف backend/README.md).
+
 هاد الجهاز اللي خدام فيه دابا ما فيهش Docker ولا PHP، داكشي علاش ما جربتش
 `docker compose up` هنا — الملفات متأكدة من ناحية YAML والمتغيرات، ولكن
-أول تشغيل حقيقي خاصو يكون عندك في جهازك. و backend كامل (scaffold Laravel)
-خاصو يكون موجود قبل الـ build، شوف `backend/README.md`:
-1. `composer create-project laravel/laravel backend-tmp`
-2. نسخ ملفات `backend/` ديال هاد المشروع لداخل `backend-tmp`
-3. `docker compose up --build`
+أول تشغيل حقيقي خاصو يكون عندك في جهازك.
 
 ## UI/UX — ما تبدل والو
 Docker و PostgreSQL بدلو غير الـ backend والتشغيل. ملفات الموبايل

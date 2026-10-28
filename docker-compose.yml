@@ -39,9 +39,8 @@ services:
       DB_PASSWORD: morocco_travel_dev
     ports:
       - "8000:8000"
-    volumes:
-      # Dev only: live code without rebuilding. Remove for a production image.
-      - ./backend:/var/www
+    # No volume mount: the image carries /overlay and scaffolds Laravel
+    # at first run. For live code editing, rebuild: docker compose up --build
 
   mobile-web:
     build: ./mobile

@@ -42,13 +42,13 @@ php artisan serve
 # Filament admin: http://localhost:8000/admin
 ```
 
-## Status — MVP v1 complete (code)
-- Mobile: all 12 screens implemented, not stubs — Explore, Map, City Detail, Place Detail, Hostels, Booking (nights/guests/total), My Trips, Profile, Saved, Cart, Settings, Start.
-- Backend: Auth, Cities, Places, Hostels, Bookings (server-side total + 12% commission), Favorites (real, not stub).
-- Filament: 5 complete resources with forms, tables and List/Create/Edit pages.
-- Docker + PostgreSQL: compose file, Dockerfiles and seeder ready.
+## Status — v2 full project (code)
+- Mobile: 13 screens with stack navigation + tabs, Auth (login/register, guest mode), API data with local fallback, search, saved/favorites toggle, cart, booking with server total. Screens: Start, Explore, Map, City Detail, Place Detail, Hostels, Booking, My Trips, Profile, Saved, Cart, Settings, Auth.
+- Backend: Auth (Sanctum), Cities, Places, Hostels, Bookings (server-side total = nights × price + 35 MAD service fee, 12% commission on subtotal), Favorites incl. toggle, Form Requests, API Resources, Feature tests, factories, Filament AdminPanelProvider.
+- Filament: 5 complete resources with forms, tables and List/Create/Edit pages. Admin: /admin.
+- Docker + PostgreSQL: compose file; first `docker compose up --build` scaffolds Laravel inside the container automatically (see docs/DOCKER.md), then migrate --seed.
 - Pushed to GitHub: https://github.com/lagawebibrahim-wq/morocco-travel-app
-- Still pending (needs you): Figma PNG export (Starter MCP limit), first `docker compose up` on your machine.
+- Still pending (needs you): Figma PNG export (Starter MCP limit), first `docker compose up` on your machine (no Docker/PHP on this machine, so not tested here).
 
 ## Screens (from Figma)
 Start Traveling, Explore, Map, City Detail, Place Detail, Hostels List,

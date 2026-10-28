@@ -1,29 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { colors, radius } from "../theme";
-
-import { places, hostels } from "../data/places";
-export default function PlaceDetailScreen({ go }: { go: (s: string) => void }) {
-  const p = places[0];
+import { places as localPlaces, hostels as localHostels } from "../data/places";
+import { getPlace, getHostels } from "../api/client";
+import { useApp } from "../context/AppContext";
+import { Card, OrangeButton, Stars } from "../components/ui";
+import type { ScreenProps } from "../types";
+export default function PlaceDetailScreen({ nav, params }: ScreenProps) {
+  const { savedIds, toggleSaved, addToCart } = useApp();
+  const placeId = String(params.placeId ?? "marzouga");
+  const local: any = localPlaces.find((p) => p.id === placeId) ?? localPlaces[0];
+  const [place, setPlace] = useState<any>(local);
+  const [hostelList, setHostelList] = useState<any[]>(localHostels.filter((h) => h.placeId === placeId));
+  useEffect(() => {
+    getPlace(placeId).then((p: any) => setPlace({ id: String(p.id), name: p.name, location: p.location, distanceKm: Number(p.distance_km ?? 0), rating: Number(p.rating ?? 4.5), travelers: Number(p.travelers_count ?? 15), description: p.description })).catch(() => {});
+    getHostels(placeId).then((hs: any[]) => { if (Array.isArray(hs) && hs.length) setHostelList(hs.map((h: any) => ({ id: String(h.id), name: h.name, pricePerDay: Number(h.price_per_day_mad), rating: Number(h.rating ?? 4.5) }))); }).catch(() => {});
+  }, [placeId]);
+  const saved = savedIds.includes(placeId);
   return (
     <ScrollView style={{ backgroundColor: colors.bg, padding: 20 }}>
       <View style={{ height: 220, backgroundColor: colors.search, borderRadius: radius.image }} />
-      <Text style={{ fontSize: 24, fontWeight: "700", color: colors.title, marginTop: 16 }}>{p.name}</Text>
-      <Text style={{ color: colors.secondary, marginTop: 6 }}>📍 {p.location} · {p.distanceKm} Km · ⭐ {p.rating}</Text>
-      <Text style={{ color: colors.gold, marginTop: 6 }}>●●● +{p.travelers} travelers</Text>
-      <Text style={{ color: colors.secondary, marginTop: 16 }}>Desert dunes, Atlas views and authentic stays — the Figma detail screen for this place, with its hostels below.</Text>
-      {hostels.map((h) => (
-        <View key={h.id} style={{ backgroundColor: colors.card, borderRadius: radius.card, padding: 14, marginTop: 12, flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "700" }}>{h.name}</Text>
-          <Text style={{ color: colors.cta, fontWeight: "700" }}>{h.pricePerDay} MAD / Day</Text>
-        </View>
+      <Text style={{ fontSize: 24, fontWeight: "700", color: colors.title, marginTop: 16 }}>{place.name}</Text>
+      <Text style={{ color: colors.secondary, marginTop: 6 }}>📍 {place.location} · {place.distanceKm} Km</Text>
+      <Stars rating={place.rating} />
+      <Text style={{ color: colors.gold, marginTop: 6 }}>●●● +{place.travelers} travelers</Text>
+      {place.description ? <Text style={{ color: colors.secondary, marginTop: 12 }}>{place.description}</Text> : null}
+      <TouchableOpacity onPress={() => toggleSaved(placeId)} style={{ marginTop: 14 }}><Text style={{ fontWeight: "700", color: colors.cta }}>{saved ? "♥ Saved — tap to remove" : "♡ Save this place"}</Text></TouchableOpacity>
+      {hostelList.map((h) => (
+        <Card key={h.id}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={{ fontWeight: "700" }}>{h.name}</Text>
+            <Text style={{ color: colors.cta, fontWeight: "700" }}>{h.pricePerDay} MAD / Day</Text>
+          </View>
+          <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
+            <TouchableOpacity onPress={() => nav.navigate("booking", { hostelId: h.id, pricePerDay: h.pricePerDay, hostelName: h.name })} style={{ backgroundColor: colors.cta, borderRadius: 12, padding: 10, flex: 1 }}><Text style={{ color: "#fff", textAlign: "center", fontWeight: "700" }}>Book</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => addToCart({ id: String(h.id), name: h.name, pricePerDay: h.pricePerDay, nights: 2 })} style={{ backgroundColor: colors.search, borderRadius: 12, padding: 10, flex: 1 }}><Text style={{ textAlign: "center", fontWeight: "700" }}>Add to cart</Text></TouchableOpacity>
+          </View>
+        </Card>
       ))}
-      <TouchableOpacity onPress={() => go("hostels")} style={{ backgroundColor: colors.card, borderRadius: radius.button, padding: 14, marginTop: 16 }}>
-        <Text style={{ textAlign: "center", fontWeight: "700" }}>See all hostels</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => go("booking")} style={{ backgroundColor: colors.cta, borderRadius: radius.button, padding: 16, marginTop: 12, marginBottom: 30 }}>
-        <Text style={{ color: "#fff", textAlign: "center", fontWeight: "700" }}>Book Now</Text>
-      </TouchableOpacity>
+      <View style={{ marginTop: 20, marginBottom: 30 }}><OrangeButton label="Book Now" onPress={() => nav.navigate("booking", { hostelId: hostelList[0]?.id, pricePerDay: hostelList[0]?.pricePerDay, hostelName: hostelList[0]?.name })} /></View>
     </ScrollView>
   );
 }

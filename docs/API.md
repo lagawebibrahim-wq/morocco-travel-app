@@ -25,3 +25,8 @@ Base: `{APP_URL}/api` — Auth: `Authorization: Bearer <sanctum-token>` where no
 - Success: `{data: …}` or the resource directly in this starter.
 - Validation: 422 with Laravel `errors` object. Auth failure: 401.
 - Money is always an integer in MAD, never a float, to avoid rounding bugs.
+
+## v2 additions
+- POST /favorites/toggle {place_id} -> {saved: true|false}
+- POST /bookings total: nights x price_per_day_mad + 35 MAD service fee; commission_mad = 12% of subtotal (rounded).
+- Booking returns 201 with BookingResource; validation via StoreBookingRequest (check_out after check_in, guests 1-10).
