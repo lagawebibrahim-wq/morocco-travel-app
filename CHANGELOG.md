@@ -1,3 +1,8 @@
+## 1.1.1 — CI backend fix
+
+- `backend/composer.json`: Laravel framework `^11.0|^12.0` (scaffold now installs Laravel 12, which previously conflicted with a Laravel-11-only constraint and broke `composer require sanctum` in CI). Added `require-dev` PHPUnit + Faker so a fresh install has the test stack.
+- CI workflow (local copy + repo file via web UI): scaffold step now does a fresh `composer install` after the overlay instead of a partial `composer require`, so it cannot be pinned by the scaffold lock file.
+
 ## 1.1.0 — Backend complete
 
 - Reviews (model, migration, API, Filament, seeder, tests) with place rating recalculation.
