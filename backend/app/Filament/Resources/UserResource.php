@@ -15,14 +15,14 @@ class UserResource extends Resource {
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('email')->email()->required(),
             Forms\Components\TextInput::make('password')->password()->dehydrated(fn ($state) => filled($state)),
-            Forms\Components\Select::make('role')->options(['admin' => 'Admin', 'user' => 'User'])->default('user'),
+            Forms\Components\Toggle::make('is_admin')->label('Admin')->default(false),
         ]);
     }
     public static function table(Table $table): Table {
         return $table->columns([
             Tables\Columns\TextColumn::make('name')->searchable(),
             Tables\Columns\TextColumn::make('email')->searchable(),
-            Tables\Columns\TextColumn::make('role')->badge(),
+            Tables\Columns\IconColumn::make('is_admin')->boolean()->label('Admin'),
             Tables\Columns\TextColumn::make('created_at')->dateTime(),
         ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
     }

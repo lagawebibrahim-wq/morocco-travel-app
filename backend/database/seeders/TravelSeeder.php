@@ -47,7 +47,7 @@ class TravelSeeder extends Seeder {
             $hostelModels[$h['name']] = Hostel::firstOrCreate(['name' => $h['name']], [...$h, 'place_id' => $placeModels[$placeName]->id]);
         }
         // Demo users — change passwords before production
-        $admin = User::firstOrCreate(['email' => 'admin@travel.local'], ['name' => 'Admin', 'password' => Hash::make('password123')]);
+        $admin = User::firstOrCreate(['email' => 'admin@travel.local'], ['name' => 'Admin', 'password' => Hash::make('password123'), 'is_admin' => true]);
         $ali = User::firstOrCreate(['email' => 'ali@travel.local'], ['name' => 'Ali', 'password' => Hash::make('password123')]);
         // Demo booking for Ali: Hostel Ils, 2 nights x 345 + 35 = 725 MAD, commission 83 MAD
         Booking::firstOrCreate(
@@ -55,5 +55,8 @@ class TravelSeeder extends Seeder {
             ['check_out' => now()->addDays(9)->toDateString(), 'guests' => 2, 'total_mad' => 725, 'commission_mad' => 83, 'status' => 'confirmed', 'payment_method' => 'cash']
         );
         Favorite::firstOrCreate(['user_id' => $ali->id, 'place_id' => $placeModels['Merzouga Marrakesh']->id]);
+        // Demo reviews (Ali rates Merzouga 5, Imlil 4) — place ratings are refreshed from these
+        \App\Models\Review::updateOrCreate(['user_id' => $ali->id, 'place_id' => $placeModels['Merzouga Marrakesh']->id], ['rating' => 5, 'comment' => 'Amazing desert night, highly recommended.']);
+        \App\Models\Review::updateOrCreate(['user_id' => $ali->id, 'place_id' => $placeModels['Imlil Marrakesh']->id], ['rating' => 4, 'comment' => 'Great Atlas hike, a bit cold at night.']);
     }
 }

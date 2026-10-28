@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\TranslationController;
 use App\Http\Controllers\Api\HealthController;
+use App\Http\Controllers\Api\ReviewController;
 
 Route::get('/health', HealthController::class);
 Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:30,1');
@@ -17,10 +18,12 @@ Route::get('/translations', [TranslationController::class, 'index']);
 Route::get('/cities', [CityController::class, 'index']);
 Route::get('/places', [PlaceController::class, 'index']);
 Route::get('/places/{place}', [PlaceController::class, 'show']);
+Route::get('/places/{place}/reviews', [ReviewController::class, 'index']);
 Route::get('/hostels', [HostelController::class, 'index']);
 Route::get('/hostels/{hostel}', [HostelController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
+    Route::put('/me', [AuthController::class, 'updateProfile']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/bookings', [BookingController::class, 'store']);
     Route::get('/bookings/me', [BookingController::class, 'mine']);
@@ -29,4 +32,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/favorites', [FavoriteController::class, 'store']);
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
     Route::delete('/favorites/{favorite}', [FavoriteController::class, 'destroy']);
+    Route::post('/places/{place}/reviews', [ReviewController::class, 'store']);
 });

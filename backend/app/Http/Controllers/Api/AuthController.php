@@ -19,5 +19,12 @@ class AuthController extends Controller {
         return ['user' => $user, 'token' => $user->createToken('mobile')->plainTextToken];
     }
     public function me(Request $r) { return $r->user(); }
+    public function updateProfile(Request $r) {
+        $data = $r->validate(['name' => 'sometimes|string|max:255', 'password' => 'sometimes|string|min:8']);
+        $user = $r->user();
+        if (isset($data['password'])) $data['password'] = Hash::make($data['password']);
+        $user->update($data);
+        return $user->fresh();
+    }
     public function logout(Request $r) { $r->user()->currentAccessToken()->delete(); return response()->noContent(); }
 }

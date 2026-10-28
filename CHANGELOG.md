@@ -1,3 +1,12 @@
+## 1.1.0 — Backend complete
+
+- Reviews (model, migration, API, Filament, seeder, tests) with place rating recalculation.
+- Paginated, sortable, filterable places/hostels endpoints.
+- Booking overlap availability check.
+- `PUT /me` profile update.
+- Admin-only Filament panel (`is_admin` + `EnsureUserIsAdmin` middleware); User resource now uses `is_admin` instead of a non-existent `role` column.
+- `docs/OPENAPI.md` API reference.
+
 # Changelog
 
 ## 1.0.0 — 2026-10-28 (finish round)
