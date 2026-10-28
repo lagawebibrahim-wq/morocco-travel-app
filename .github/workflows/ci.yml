@@ -36,6 +36,8 @@ jobs:
           cd backend-ci
           rm -f composer.lock
           composer install --no-interaction --no-progress
+          rm -f bootstrap/cache/packages.php bootstrap/cache/services.php
+          php artisan package:discover --ansi || true
           cp .env.example .env || true
           php artisan key:generate --force || true
       - name: Run Laravel tests
