@@ -1,3 +1,9 @@
+## 1.1.4 — CI Tests\\TestCase fix
+
+- New failure in run 40750949578: PHPUnit failed before running any test with `Class "Tests\\TestCase" not found` (AuthApiTest.php:6).
+- Root cause: our overlay `composer.json` had no `autoload-dev` mapping, while the scaffold's does (`Tests\\` => `tests/`). After the fresh `composer install`, the scaffold's `tests/TestCase.php` was present but not autoloadable.
+- Fix: added `autoload-dev` mapping to `backend/composer.json` and added `backend/tests/TestCase.php` (identical to the Laravel 12 scaffold) to the project itself, so the test base class no longer depends on scaffold leftovers.
+
 ## 1.1.3 — CI test command fix
 
 - New failure in run 40750120649 was NOT Pail: `php artisan test` reported `Command "test" is not defined` — the artisan test command is only registered when a compatible PHPUnit is installed, and our `^11|^12` range let Composer pick PHPUnit 12.
