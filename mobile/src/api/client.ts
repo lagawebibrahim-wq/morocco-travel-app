@@ -29,3 +29,6 @@ export const createBooking = (body: Record<string, any>) => api<any>("/bookings"
 export const getMyBookings = () => api<any[]>("/bookings/me");
 export const getFavorites = () => api<any[]>("/favorites/me");
 export const toggleFavorite = (placeId: string | number) => api<any>("/favorites/toggle", { method: "POST", body: JSON.stringify({ place_id: placeId }) });
+
+export const getLanguages = () => api<any[]>("/languages");
+export const getTranslations = (locale: string) => api<any>(`/translations?locale=${locale}`);

@@ -14,3 +14,21 @@ describe("filterPlaces", () => {
   it("filters case-insensitively", () => { expect(filterPlaces(list, "imlil")).toEqual([{ name: "Imlil Marrakesh" }]); });
   it("empty query returns all", () => { expect(filterPlaces(list, "")).toEqual(list); });
 });
+
+import { dictionaries, translate } from "../i18n/dictionaries";
+describe("i18n dictionaries (same keys as backend seeder)", () => {
+  it("ar/fr/en all have book_now", () => {
+    expect(dictionaries.ar.book_now).toBe("احجز الآن");
+    expect(dictionaries.fr.book_now).toBe("Réserver");
+    expect(dictionaries.en.book_now).toBe("Book Now");
+  });
+  it("translate falls back to en for a missing key in a locale", () => {
+    expect(translate("ar", "book_now")).toBe("احجز الآن");
+    expect(translate("ar", "no_such_key_xyz")).toBe("no_such_key_xyz");
+  });
+  it("all locales share the same key set", () => {
+    const en = Object.keys(dictionaries.en).sort();
+    expect(Object.keys(dictionaries.ar).sort()).toEqual(en);
+    expect(Object.keys(dictionaries.fr).sort()).toEqual(en);
+  });
+});

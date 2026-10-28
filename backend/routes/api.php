@@ -6,9 +6,12 @@ use App\Http\Controllers\Api\PlaceController;
 use App\Http\Controllers\Api\HostelController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\TranslationController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/languages', [TranslationController::class, 'languages']);
+Route::get('/translations', [TranslationController::class, 'index']);
 Route::get('/cities', [CityController::class, 'index']);
 Route::get('/places', [PlaceController::class, 'index']);
 Route::get('/places/{place}', [PlaceController::class, 'show']);

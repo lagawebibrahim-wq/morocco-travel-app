@@ -59,3 +59,8 @@ See `docs/UI-UX-EXPORT.md` for the full mapping, colours and components.
 - Backend: BookingPricing service, expanded seeder (2 cities, 6 places, 6 hostels, 2 demo users, 1 demo booking + favorite), tests: Unit Pricing + Feature Auth/Places/Hostels/Bookings/Favorites.
 - Mobile: Jest tests (7/7 passed here) for booking/cart/search, `npm test` and `npm run typecheck`.
 - Run tests: see docs/TESTING.md. Laravel tests (php artisan test) still need PHP on your machine / Docker — they were written and syntax-checked here, not executed here (no PHP on this machine).
+
+## Status — v4 i18n (ar/fr/en from backend)
+- Backend: translations table + TranslationSeeder (58 keys x 3 locales), GET /api/languages and GET /api/translations?locale=ar|fr|en, Filament Translations resource.
+- Mobile: LanguageContext fetches translations from backend, falls back to local dictionaries offline, default locale ar, switcher on Start + Settings (العربية / Français / English), all screens use t().
+- See docs/I18N.md. Laravel tests for translations included; run with php artisan test on your machine.
