@@ -7,9 +7,11 @@ use App\Http\Controllers\Api\HostelController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\TranslationController;
+use App\Http\Controllers\Api\HealthController;
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/health', HealthController::class);
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:30,1');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:30,1');
 Route::get('/languages', [TranslationController::class, 'languages']);
 Route::get('/translations', [TranslationController::class, 'index']);
 Route::get('/cities', [CityController::class, 'index']);
