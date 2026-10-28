@@ -1,3 +1,9 @@
+## 1.1.5 — CI Mockery fix
+
+- New result in run 40756738973: PHPUnit finally ran — 28 tests, 4 passed, 24 errors, all with the same error `Class "Mockery" not found` (first: AuthApiTest::test_register_login_me_logout).
+- Root cause: Laravel's TestCase uses Mockery in its lifecycle, and the scaffold's `require-dev` includes `mockery/mockery`, but our overlay `composer.json` did not. Unit tests (plain PHPUnit) passed; all Feature tests (Laravel TestCase) errored.
+- Fix: added `mockery/mockery ^1.6` to `backend/composer.json` require-dev.
+
 ## 1.1.4 — CI Tests\\TestCase fix
 
 - New failure in run 40750949578: PHPUnit failed before running any test with `Class "Tests\\TestCase" not found` (AuthApiTest.php:6).
