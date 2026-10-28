@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../theme";
-import { getMyBookings } from "../api/client";
+import { getMyBookings, cancelBooking } from "../api/client";
 import { useApp } from "../context/AppContext";
 import { Card, OrangeButton } from "../components/ui";
 import { useLanguage } from "../context/LanguageContext";
@@ -17,7 +17,7 @@ export default function MyTripsScreen({ nav }: ScreenProps) {
       {!user ? <Card><Text>{t("guest_trips_hint")}</Text><Text style={{ color: colors.secondary, marginTop: 6 }}>{t("demo_trip")}</Text><Text style={{ marginTop: 10, fontWeight: "700" }}>Hostel Ils — 2 {t("nights")} · 2 {t("guests")} · 725 MAD</Text></Card> : null}
       {user && list === null ? <Text style={{ marginTop: 16, color: colors.secondary }}>{t("loading")}</Text> : null}
       {user && list !== null && list.length === 0 ? <Text style={{ marginTop: 16, color: colors.secondary }}>{t("no_bookings")}</Text> : null}
-      {(list ?? []).map((b: any) => (<Card key={String(b.id)}><Text style={{ fontWeight: "700" }}>{b.hostel?.name ?? "Booking"} #{b.id}</Text><Text style={{ marginTop: 4 }}>{b.check_in} → {b.check_out} · {b.guests} {t("guests")} · {b.status}</Text><Text style={{ marginTop: 4, fontWeight: "700" }}>{b.total_mad} MAD</Text></Card>))}
+      {(list ?? []).map((b: any) => (<Card key={String(b.id)}><Text style={{ fontWeight: "700" }}>{b.hostel?.name ?? "Booking"} #{b.id}</Text><Text style={{ marginTop: 4 }}>{b.check_in} → {b.check_out} · {b.guests} {t("guests")} · {b.status}{b.payment_method ? " · " + b.payment_method : ""}</Text><Text style={{ marginTop: 4, fontWeight: "700" }}>{b.total_mad} MAD</Text>{b.status !== "cancelled" ? <TouchableOpacity onPress={async () => { try { await cancelBooking(b.id); setList((cur) => (cur ?? []).map((x: any) => (String(x.id) === String(b.id) ? { ...x, status: "cancelled" } : x))); } catch {} }} style={{ marginTop: 8 }}><Text style={{ color: colors.cta, fontWeight: "700" }}>{t("cancel_booking")}</Text></TouchableOpacity> : null}</Card>))}
       <View style={{ marginTop: 20 }}><OrangeButton label={t("explore_more")} onPress={() => nav.navigate("explore")} /></View>
     </ScrollView>
   );

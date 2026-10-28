@@ -178,5 +178,20 @@ class TranslationSeeder extends Seeder {
             Translation::updateOrCreate(['locale' => 'en', 'key' => 'choose_hostel_first'], ['value' => 'Choose a hostel first from Place Detail or Hostels.']);
             Translation::updateOrCreate(['locale' => 'fr', 'key' => 'choose_hostel_first'], ['value' => 'Choisissez d\'abord une auberge dans le détail ou les auberges.']);
             Translation::updateOrCreate(['locale' => 'ar', 'key' => 'choose_hostel_first'], ['value' => 'اختر نزلا أولا من تفاصيل المكان أو النزل.']);
+            Translation::updateOrCreate(['locale' => 'en', 'key' => 'payment_method'], ['value' => 'Payment method']);
+            Translation::updateOrCreate(['locale' => 'fr', 'key' => 'payment_method'], ['value' => 'Moyen de paiement']);
+            Translation::updateOrCreate(['locale' => 'ar', 'key' => 'payment_method'], ['value' => 'طريقة الدفع']);
+            Translation::updateOrCreate(['locale' => 'en', 'key' => 'cash_on_arrival'], ['value' => 'Cash on arrival']);
+            Translation::updateOrCreate(['locale' => 'fr', 'key' => 'cash_on_arrival'], ['value' => 'Espèces à l\'arrivée']);
+            Translation::updateOrCreate(['locale' => 'ar', 'key' => 'cash_on_arrival'], ['value' => 'الدفع نقدا عند الوصول']);
+            Translation::updateOrCreate(['locale' => 'en', 'key' => 'card'], ['value' => 'Card']);
+            Translation::updateOrCreate(['locale' => 'fr', 'key' => 'card'], ['value' => 'Carte']);
+            Translation::updateOrCreate(['locale' => 'ar', 'key' => 'card'], ['value' => 'بطاقة']);
+            Translation::updateOrCreate(['locale' => 'en', 'key' => 'cancel_booking'], ['value' => 'Cancel booking']);
+            Translation::updateOrCreate(['locale' => 'fr', 'key' => 'cancel_booking'], ['value' => 'Annuler la réservation']);
+            Translation::updateOrCreate(['locale' => 'ar', 'key' => 'cancel_booking'], ['value' => 'إلغاء الحجز']);
+            Translation::updateOrCreate(['locale' => 'en', 'key' => 'booking_cancelled'], ['value' => 'Booking cancelled']);
+            Translation::updateOrCreate(['locale' => 'fr', 'key' => 'booking_cancelled'], ['value' => 'Réservation annulée']);
+            Translation::updateOrCreate(['locale' => 'ar', 'key' => 'booking_cancelled'], ['value' => 'تم إلغاء الحجز']);
     }
 }

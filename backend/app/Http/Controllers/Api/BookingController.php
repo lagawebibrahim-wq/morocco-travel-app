@@ -12,8 +12,14 @@ class BookingController extends Controller {
         $data = $r->validated();
         $hostel = Hostel::findOrFail($data['hostel_id']);
         $pricing = BookingPricing::calculate($hostel->price_per_day_mad, $data['check_in'], $data['check_out']);
-        $booking = Booking::create([...$data, 'user_id' => $r->user()->id, 'total_mad' => $pricing['total_mad'], 'commission_mad' => $pricing['commission_mad'], 'status' => 'pending']);
+        $booking = Booking::create([...$data, 'payment_method' => $data['payment_method'] ?? 'cash', 'user_id' => $r->user()->id, 'total_mad' => $pricing['total_mad'], 'commission_mad' => $pricing['commission_mad'], 'status' => 'pending']);
         return (new BookingResource($booking->load('hostel')))->response()->setStatusCode(201);
+    }
+    public function cancel(Request $r, Booking $booking) {
+        if ($booking->user_id !== $r->user()->id) return response()->json(['message' => 'Forbidden'], 403);
+        if ($booking->status === 'cancelled') return response()->json(['message' => 'Already cancelled'], 422);
+        $booking->update(['status' => 'cancelled']);
+        return new BookingResource($booking->load('hostel'));
     }
     public function mine(Request $r) { return BookingResource::collection(Booking::with('hostel')->where('user_id', $r->user()->id)->latest()->get()); }
 }

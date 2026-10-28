@@ -64,3 +64,9 @@ See `docs/UI-UX-EXPORT.md` for the full mapping, colours and components.
 - Backend: translations table + TranslationSeeder (58 keys x 3 locales), GET /api/languages and GET /api/translations?locale=ar|fr|en, Filament Translations resource.
 - Mobile: LanguageContext fetches translations from backend, falls back to local dictionaries offline, default locale ar, switcher on Start + Settings (العربية / Français / English), all screens use t().
 - See docs/I18N.md. Laravel tests for translations included; run with php artisan test on your machine.
+
+## Status — v5 finish round
+- Booking payment_method (cash/card, recorded, no gateway charge yet), user cancel endpoint POST /bookings/{id}/cancel with ownership check, Filament TravelStatsWidget (bookings, revenue, commission, hostels, places).
+- Figma PNG export re-checked 2026-10-28 evening: still blocked by Starter MCP limit (same error), so no PNGs yet.
+- PHP: phply was tried and discarded — it only parses PHP 5 and falsely fails on modern return types/typed properties; php -l still needs PHP on your machine.
+- Still needs your machine: first docker compose run + php artisan test (Laravel tests written, not executed here).

@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/bookings', [BookingController::class, 'store']);
     Route::get('/bookings/me', [BookingController::class, 'mine']);
+    Route::post('/bookings/{booking}/cancel', [BookingController::class, 'cancel']);
     Route::get('/favorites/me', [FavoriteController::class, 'index']);
     Route::post('/favorites', [FavoriteController::class, 'store']);
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);

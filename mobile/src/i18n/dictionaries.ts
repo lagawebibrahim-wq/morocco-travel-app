@@ -65,7 +65,12 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "demo_trip": "الرحلة التجريبية أسفله مثال Figma، وليست حجزا من السيرفر.",
     "back": "رجوع",
     "loading": "جارٍ التحميل…",
-    "choose_hostel_first": "اختر نزلا أولا من تفاصيل المكان أو النزل."
+    "choose_hostel_first": "اختر نزلا أولا من تفاصيل المكان أو النزل.",
+    "payment_method": "طريقة الدفع",
+    "cash_on_arrival": "الدفع نقدا عند الوصول",
+    "card": "بطاقة",
+    "cancel_booking": "إلغاء الحجز",
+    "booking_cancelled": "تم إلغاء الحجز"
 },
   fr: {
   "app_name": "Voyage Maroc",
@@ -125,7 +130,12 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "demo_trip": "Le voyage démo ci-dessous est l'exemple Figma, pas une réservation serveur.",
     "back": "Retour",
     "loading": "Chargement…",
-    "choose_hostel_first": "Choisissez d'abord une auberge dans le détail ou les auberges."
+    "choose_hostel_first": "Choisissez d'abord une auberge dans le détail ou les auberges.",
+    "payment_method": "Moyen de paiement",
+    "cash_on_arrival": "Espèces à l'arrivée",
+    "card": "Carte",
+    "cancel_booking": "Annuler la réservation",
+    "booking_cancelled": "Réservation annulée"
 },
   en: {
   "app_name": "Morocco Travel",
@@ -185,7 +195,12 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "demo_trip": "Demo trip below is the Figma example, not a server booking.",
     "back": "Back",
     "loading": "Loading…",
-    "choose_hostel_first": "Choose a hostel first from Place Detail or Hostels."
+    "choose_hostel_first": "Choose a hostel first from Place Detail or Hostels.",
+    "payment_method": "Payment method",
+    "cash_on_arrival": "Cash on arrival",
+    "card": "Card",
+    "cancel_booking": "Cancel booking",
+    "booking_cancelled": "Booking cancelled"
 },
 };
 export function translate(locale: Locale, key: string, dict?: Record<string, string>): string {

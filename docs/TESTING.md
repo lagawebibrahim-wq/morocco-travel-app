@@ -7,7 +7,7 @@ php artisan test
 ```
 Tests included:
 - Unit: BookingPricingTest — Figma example 725 MAD (2 x 345 + 35 fee, commission 83), 1-night, long stay, same-day = 1 night.
-- Feature: AuthApiTest (register 201, login, me, logout, wrong password, validation), PlacesApiTest (list + search), HostelsApiTest (list + place filter), BookingsApiTest (total 725, commission 83, auth required, bad dates/guests rejected), FavoritesApiTest (toggle save/unsave, auth required).
+- Feature: BookingPaymentTest (card payment, cancel own booking, cancel other user's forbidden, invalid payment rejected), AuthApiTest (register 201, login, me, logout, wrong password, validation), PlacesApiTest (list + search), HostelsApiTest (list + place filter), BookingsApiTest (total 725, commission 83, auth required, bad dates/guests rejected), FavoritesApiTest (toggle save/unsave, auth required).
 - Test data: factories for City, Place, Hostel, Booking, Favorite (User factory comes from a fresh Laravel scaffold).
 
 ## Mobile (Expo, TypeScript)

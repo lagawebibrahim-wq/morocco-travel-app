@@ -45,7 +45,7 @@ class TravelSeeder extends Seeder {
         // Demo booking for Ali: Hostel Ils, 2 nights x 345 + 35 = 725 MAD, commission 83 MAD
         Booking::firstOrCreate(
             ['user_id' => $ali->id, 'hostel_id' => $hostelModels['Hostel Ils']->id, 'check_in' => now()->addDays(7)->toDateString()],
-            ['check_out' => now()->addDays(9)->toDateString(), 'guests' => 2, 'total_mad' => 725, 'commission_mad' => 83, 'status' => 'confirmed']
+            ['check_out' => now()->addDays(9)->toDateString(), 'guests' => 2, 'total_mad' => 725, 'commission_mad' => 83, 'status' => 'confirmed', 'payment_method' => 'cash']
         );
         Favorite::firstOrCreate(['user_id' => $ali->id, 'place_id' => $placeModels['Merzouga Marrakesh']->id]);
     }

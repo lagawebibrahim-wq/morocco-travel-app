@@ -9,6 +9,7 @@ class StoreBookingRequest extends FormRequest {
             'check_in' => 'required|date|after_or_equal:today',
             'check_out' => 'required|date|after:check_in',
             'guests' => 'integer|min:1|max:10',
+            'payment_method' => 'in:cash,card',
         ];
     }
 }

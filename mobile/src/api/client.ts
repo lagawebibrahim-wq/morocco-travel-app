@@ -32,3 +32,4 @@ export const toggleFavorite = (placeId: string | number) => api<any>("/favorites
 
 export const getLanguages = () => api<any[]>("/languages");
 export const getTranslations = (locale: string) => api<any>(`/translations?locale=${locale}`);
+export const cancelBooking = (id: string | number) => api<any>(`/bookings/${id}/cancel`, { method: "POST" });

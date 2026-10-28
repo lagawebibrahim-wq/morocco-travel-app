@@ -19,6 +19,7 @@ class BookingResource extends Resource {
             Forms\Components\TextInput::make('guests')->numeric()->default(1),
             Forms\Components\TextInput::make('total_mad')->numeric()->required()->label('Total (MAD)'),
             Forms\Components\TextInput::make('commission_mad')->numeric()->label('Commission (MAD, 12%)'),
+            Forms\Components\Select::make('payment_method')->options(['cash' => 'Cash on arrival', 'card' => 'Card'])->required()->default('cash'),
             Forms\Components\Select::make('status')->options(['pending' => 'Pending', 'confirmed' => 'Confirmed', 'cancelled' => 'Cancelled', 'completed' => 'Completed'])->required(),
         ]);
     }
@@ -30,6 +31,7 @@ class BookingResource extends Resource {
             Tables\Columns\TextColumn::make('check_out')->date(),
             Tables\Columns\TextColumn::make('total_mad')->suffix(' MAD'),
             Tables\Columns\TextColumn::make('commission_mad')->suffix(' MAD'),
+            Tables\Columns\TextColumn::make('payment_method'),
             Tables\Columns\TextColumn::make('status')->badge(),
         ])->actions([Tables\Actions\EditAction::make()]);
     }
