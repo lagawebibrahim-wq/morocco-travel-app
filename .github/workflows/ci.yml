@@ -43,7 +43,7 @@ jobs:
       - name: Run Laravel tests
         run: |
           cd backend-ci
-          php artisan test --testsuite=Unit,Feature || php artisan test
+          vendor/bin/phpunit --testsuite=Unit,Feature || vendor/bin/phpunit
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
