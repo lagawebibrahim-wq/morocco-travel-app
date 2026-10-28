@@ -54,3 +54,8 @@ php artisan serve
 Start Traveling, Explore, Map, City Detail, Place Detail, Hostels List,
 Booking & Payment, My Trips, Profile, Saved, My Cart, Settings.
 See `docs/UI-UX-EXPORT.md` for the full mapping, colours and components.
+
+## Status — v3 tests + data
+- Backend: BookingPricing service, expanded seeder (2 cities, 6 places, 6 hostels, 2 demo users, 1 demo booking + favorite), tests: Unit Pricing + Feature Auth/Places/Hostels/Bookings/Favorites.
+- Mobile: Jest tests (7/7 passed here) for booking/cart/search, `npm test` and `npm run typecheck`.
+- Run tests: see docs/TESTING.md. Laravel tests (php artisan test) still need PHP on your machine / Docker — they were written and syntax-checked here, not executed here (no PHP on this machine).

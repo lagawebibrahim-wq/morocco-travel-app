@@ -16,6 +16,11 @@ class BookingsApiTest extends TestCase {
         $this->assertEquals(725, $res->json('data.total_mad') ?? $res->json('total_mad'));
         $this->assertEquals(83, $res->json('data.commission_mad') ?? $res->json('commission_mad'));
     }
+    public function test_booking_validation_rejects_bad_dates(): void {
+        $user = User::factory()->create(); $hostel = Hostel::factory()->create();
+        $this->actingAs($user, 'sanctum')->postJson('/api/bookings', ['hostel_id' => $hostel->id, 'check_in' => now()->addDays(3)->toDateString(), 'check_out' => now()->addDay()->toDateString(), 'guests' => 2])->assertUnprocessable();
+        $this->actingAs($user, 'sanctum')->postJson('/api/bookings', ['hostel_id' => $hostel->id, 'check_in' => now()->addDay()->toDateString(), 'check_out' => now()->addDays(3)->toDateString(), 'guests' => 99])->assertUnprocessable();
+    }
     public function test_booking_requires_auth(): void {
         $this->postJson('/api/bookings', [])->assertUnauthorized();
     }
