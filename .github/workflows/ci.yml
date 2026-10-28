@@ -1,0 +1,46 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  mobile:
+    name: Mobile (TypeScript + Jest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+        working-directory: mobile
+      - run: npm run typecheck
+        working-directory: mobile
+      - run: npm test -- --ci
+        working-directory: mobile
+  backend:
+    name: Backend (Laravel tests, sqlite)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: pdo_sqlite, mbstring, zip
+          coverage: none
+      - name: Scaffold Laravel and overlay this project
+        run: |
+          composer create-project laravel/laravel backend-ci --prefer-dist --no-interaction --no-progress
+          cp -a backend/. backend-ci/
+          cd backend-ci
+          composer require laravel/sanctum --no-interaction --no-progress
+          cp .env.example .env || true
+          php artisan key:generate --force || true
+      - name: Run Laravel tests
+        run: |
+          cd backend-ci
+          php artisan test --testsuite=Unit,Feature || php artisan test
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
