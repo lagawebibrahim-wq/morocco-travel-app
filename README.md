@@ -70,3 +70,10 @@ See `docs/UI-UX-EXPORT.md` for the full mapping, colours and components.
 - Figma PNG export re-checked 2026-10-28 evening: still blocked by Starter MCP limit (same error), so no PNGs yet.
 - PHP: phply was tried and discarded — it only parses PHP 5 and falsely fails on modern return types/typed properties; php -l still needs PHP on your machine.
 - Still needs your machine: first docker compose run + php artisan test (Laravel tests written, not executed here).
+
+## Status — v6 audit: free map + RTL + persistence
+- Audit found and fixed: backend places had no lat/lng (map could not use backend data), no persistence (login/language lost on restart), no RTL flip, no images.
+- Free map: OpenStreetMap + Leaflet via WebView (no API key), markers from GET /api/places (latitude/longitude/image_url), tap marker -> Place Detail, OSM links below.
+- RTL: I18nManager forceRTL for ar + immediate row-reverse flipping + remount on locale change; language/token/saved persisted with AsyncStorage.
+- Images: seeder picsum demo images, shown in Explore/Place Detail when present.
+- Tests: Jest 13/13 (incl. map OSM + RTL), TypeScript clean. Laravel tests (incl. PlacesCoordinatesTest) still need PHP on your machine.

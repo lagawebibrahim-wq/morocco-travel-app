@@ -34,6 +34,13 @@ class TravelSeeder extends Seeder {
             ['place' => 'Agafay', 'name' => 'Agafay Camp', 'price_per_day_mad' => 550, 'rating' => 4.7, 'is_featured' => false],
             ['place' => 'Erg Chebbi Dunes', 'name' => 'Dune Night Camp', 'price_per_day_mad' => 480, 'rating' => 4.9, 'is_featured' => true],
         ];
+        // Coordinates + demo images (picsum seeds for test/demo; replace image_url with real photos before production)
+        $coords = {'Merzouga Marrakesh': (31.0997, -4.0117, 'merzouga'), 'Imlil Marrakesh': (31.1325, -7.9167, 'imlil'), 'Marrakesh': (31.6295, -7.9811, 'marrakech'), 'Agafay': (31.4426, -8.0203, 'agafay'), 'Ourika Valley': (31.35, -7.75, 'ourika'), 'Erg Chebbi Dunes': (31.1475, -3.975, 'ergchebbi')};
+        foreach ($placeModels as $name => $place) {
+            if (isset($coords[$name])) {
+                $place->update(['latitude' => $coords[$name][0], 'longitude' => $coords[$name][1], 'image_url' => 'https://picsum.photos/seed/' . $coords[$name][2] . '/800/600']);
+            }
+        }
         $hostelModels = [];
         foreach ($hostels as $h) {
             $placeName = $h['place']; unset($h['place']);

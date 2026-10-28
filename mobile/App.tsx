@@ -24,7 +24,7 @@ const screens: Record<string, any> = {
 };
 type Route = { name: string; params: Record<string, any> };
 function InnerApp() {
-  const { t } = useLanguage();
+  const { t, locale, rtl } = useLanguage();
   const tabs: [string, string][] = [["explore", "travel_places"], ["map", "map"], ["trips", "my_trips"], ["saved", "saved"], ["profile", "profile"]];
   const [stack, setStack] = useState<Route[]>([{ name: "start", params: {} }]);
   const current = stack[stack.length - 1];
@@ -36,14 +36,14 @@ function InnerApp() {
     go: (name: string) => setStack((s) => [...s, { name, params: {} }]),
   };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
+    <SafeAreaView key={locale} style={{ flex: 1, backgroundColor: colors.bg }}>
       <View style={{ flex: 1 }}>
         {stack.length > 1 ? (
           <TouchableOpacity onPress={nav.back} style={{ paddingHorizontal: 20, paddingTop: 8 }}><Text style={{ color: colors.cta, fontWeight: "700" }}>← {t("back")}</Text></TouchableOpacity>
         ) : null}
         <Screen nav={nav} go={nav.go} params={current.params} />
       </View>
-      <View style={{ flexDirection: "row", backgroundColor: colors.card, padding: 12 }}>
+      <View style={{ flexDirection: rtl ? "row-reverse" : "row", backgroundColor: colors.card, padding: 12 }}>
         {tabs.map(([name, key]) => (
           <TouchableOpacity key={name} onPress={() => setStack([{ name, params: {} }])} style={{ flex: 1 }}>
             <Text style={{ textAlign: "center", fontWeight: current.name === name ? "700" : "400", color: current.name === name ? colors.cta : colors.secondary }}>{t(key)}</Text>

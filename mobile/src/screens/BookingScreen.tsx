@@ -10,7 +10,7 @@ import type { ScreenProps } from "../types";
 const today = () => new Date().toISOString().slice(0, 10);
 const plusDays = (n: number) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 export default function BookingScreen({ nav, params }: ScreenProps) {
-  const { t } = useLanguage();
+  const { t, rtl } = useLanguage();
   const { user, clearCart } = useApp();
   const price = Number(params.pricePerDay ?? 345);
   const hostelName = String(params.hostelName ?? "Hostel Ils");
@@ -40,17 +40,17 @@ export default function BookingScreen({ nav, params }: ScreenProps) {
       <Text style={{ fontWeight: "700", marginTop: 12 }}>{t("check_out")}</Text>
       <TextInput value={checkOut} onChangeText={setCheckOut} style={{ backgroundColor: colors.card, borderRadius: 12, padding: 12, marginTop: 6 }} />
       <Text style={{ fontWeight: "700", marginTop: 16 }}>{t("nights")}: {nights}</Text>
-      <View style={{ flexDirection: "row", gap: 10, marginTop: 8 }}>
+      <View style={{ flexDirection: rtl ? "row-reverse" : "row", gap: 10, marginTop: 8 }}>
         <TouchableOpacity onPress={() => setNights(Math.max(1, nights - 1))} style={{ backgroundColor: colors.card, padding: 12, borderRadius: 12 }}><Text>−</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => setNights(nights + 1)} style={{ backgroundColor: colors.card, padding: 12, borderRadius: 12 }}><Text>+</Text></TouchableOpacity>
       </View>
       <Text style={{ fontWeight: "700", marginTop: 16 }}>{t("guests")}: {guests}</Text>
-      <View style={{ flexDirection: "row", gap: 10, marginTop: 8 }}>
+      <View style={{ flexDirection: rtl ? "row-reverse" : "row", gap: 10, marginTop: 8 }}>
         <TouchableOpacity onPress={() => setGuests(Math.max(1, guests - 1))} style={{ backgroundColor: colors.card, padding: 12, borderRadius: 12 }}><Text>−</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => setGuests(Math.min(10, guests + 1))} style={{ backgroundColor: colors.card, padding: 12, borderRadius: 12 }}><Text>+</Text></TouchableOpacity>
       </View>
       <Text style={{ fontWeight: "700", marginTop: 16 }}>{t("payment_method")}</Text>
-      <View style={{ flexDirection: "row", gap: 10, marginTop: 8 }}>
+      <View style={{ flexDirection: rtl ? "row-reverse" : "row", gap: 10, marginTop: 8 }}>
         <TouchableOpacity onPress={() => setPayment("cash")} style={{ backgroundColor: payment === "cash" ? colors.cta : colors.card, borderRadius: 12, padding: 12, flex: 1 }}><Text style={{ textAlign: "center", fontWeight: "700", color: payment === "cash" ? "#fff" : colors.title }}>{t("cash_on_arrival")}</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => setPayment("card")} style={{ backgroundColor: payment === "card" ? colors.cta : colors.card, borderRadius: 12, padding: 12, flex: 1 }}><Text style={{ textAlign: "center", fontWeight: "700", color: payment === "card" ? "#fff" : colors.title }}>{t("card")}</Text></TouchableOpacity>
       </View>
