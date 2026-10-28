@@ -9,6 +9,10 @@ if [ ! -f /var/www/artisan ]; then
   rm -rf /tmp/laravel-app
   cd /var/www
   composer require laravel/sanctum filament/filament --no-interaction || true
+  # The scaffold's bootstrap/cache/packages.php still lists dev packages (Pail, Sail)
+  # that our composer.json does not install — regenerate discovery or artisan boots fail.
+  rm -f bootstrap/cache/packages.php bootstrap/cache/services.php
+  php artisan package:discover --ansi || true
 fi
 cd /var/www
 # Env: use the overlay example if no .env exists.

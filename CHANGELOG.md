@@ -1,3 +1,8 @@
+## 1.1.2 — CI Pail discovery fix
+
+- Root cause of the Run Laravel tests failure: the scaffold's `bootstrap/cache/packages.php` still listed dev packages (Laravel Pail, Sail) that the overlay's `composer.json` does not install, and our `composer.json` had no `post-autoload-dump` script to regenerate it, so `php artisan` failed with `Class Laravel\Pail\PailServiceProvider not found` before any test ran.
+- Fix: `backend/composer.json` now has the standard `post-autoload-dump` discovery script + `laravel/tinker`; CI and Docker entrypoint both clear `bootstrap/cache/packages.php`/`services.php` and run `php artisan package:discover` after the overlay install.
+
 ## 1.1.1 — CI backend fix
 
 - `backend/composer.json`: Laravel framework `^11.0|^12.0` (scaffold now installs Laravel 12, which previously conflicted with a Laravel-11-only constraint and broke `composer require sanctum` in CI). Added `require-dev` PHPUnit + Faker so a fresh install has the test stack.
