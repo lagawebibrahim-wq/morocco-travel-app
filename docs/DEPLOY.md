@@ -28,4 +28,4 @@ cd mobile && npm install && npx expo start
 - Replace picsum demo images in TravelSeeder with real photos.
 - Add a real payment gateway if card payments must actually charge (today card is recorded only).
 - Set a real domain + HTTPS, and point the mobile app to it via EXPO_PUBLIC_API_URL.
-- CI runs on every push to main (GitHub Actions → Actions tab): mobile TypeScript + Jest, backend Laravel tests on sqlite.
+- CI: workflow file `.github/workflows/ci.yml` is ready locally but must be added once from your machine (GitHub Apps cannot push workflow files): clone the repo, copy the file in, push — then CI runs on every push to main (mobile TypeScript + Jest, backend Laravel tests on sqlite).

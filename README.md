@@ -79,6 +79,6 @@ See `docs/UI-UX-EXPORT.md` for the full mapping, colours and components.
 - Tests: Jest 13/13 (incl. map OSM + RTL), TypeScript clean. Laravel tests (incl. PlacesCoordinatesTest) still need PHP on your machine.
 
 ## Status — v7 (1.0.0, finish round)
-- CI on GitHub Actions: mobile TypeScript + Jest and backend Laravel tests (sqlite) run on every push to main — see Actions tab after push.
+- CI (ready, needs one manual step): GitHub Actions workflow is in `.github/workflows/ci.yml` locally, but the Muse GitHub App cannot push workflow files (GitHub blocks that permission), so it was NOT pushed. Add it once from your machine: `git clone` the repo, copy this file in, `git push` — then CI (mobile TypeScript + Jest, backend Laravel tests on sqlite) runs on every push to main.
 - GET /api/health, rate limiting on auth, phpunit.xml, docs/DEPLOY.md, CHANGELOG.md, version 1.0.0.
 - Remaining external-only items: Figma PNG export (Starter MCP limit, re-checked 2026-10-28 evening, still blocked) and first docker run on your machine.
