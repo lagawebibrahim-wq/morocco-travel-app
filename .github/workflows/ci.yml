@@ -34,7 +34,8 @@ jobs:
           composer create-project laravel/laravel backend-ci --prefer-dist --no-interaction --no-progress
           cp -a backend/. backend-ci/
           cd backend-ci
-          composer require laravel/sanctum --no-interaction --no-progress
+          rm -f composer.lock
+          composer install --no-interaction --no-progress
           cp .env.example .env || true
           php artisan key:generate --force || true
       - name: Run Laravel tests
