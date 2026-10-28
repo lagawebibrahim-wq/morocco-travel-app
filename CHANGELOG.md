@@ -1,3 +1,8 @@
+## 1.1.3 — CI test command fix
+
+- New failure in run 40750120649 was NOT Pail: `php artisan test` reported `Command "test" is not defined` — the artisan test command is only registered when a compatible PHPUnit is installed, and our `^11|^12` range let Composer pick PHPUnit 12.
+- Fix: pin `phpunit/phpunit` to `^11.5` (the scaffold's known-good constraint for Laravel 12) and run tests via `vendor/bin/phpunit` directly in CI instead of through artisan, so the test runner does not depend on artisan command registration.
+
 ## 1.1.2 — CI Pail discovery fix
 
 - Root cause of the Run Laravel tests failure: the scaffold's `bootstrap/cache/packages.php` still listed dev packages (Laravel Pail, Sail) that the overlay's `composer.json` does not install, and our `composer.json` had no `post-autoload-dump` script to regenerate it, so `php artisan` failed with `Class Laravel\Pail\PailServiceProvider not found` before any test ran.
