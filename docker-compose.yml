@@ -1,0 +1,59 @@
+# Morocco Travel App — everything in Docker
+# API (Laravel + Filament) + PostgreSQL + Mobile web preview
+# UI/UX is unchanged: see docs/UI-UX-EXPORT.md — Docker/Postgres touch
+# only the backend and the runtime, never mobile/src/theme.ts or screens.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: morocco_travel
+      POSTGRES_USER: morocco
+      POSTGRES_PASSWORD: morocco_travel_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U morocco -d morocco_travel"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_NAME: "Morocco Travel"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: morocco_travel
+      DB_USERNAME: morocco
+      DB_PASSWORD: morocco_travel_dev
+    ports:
+      - "8000:8000"
+    volumes:
+      # Dev only: live code without rebuilding. Remove for a production image.
+      - ./backend:/var/www
+
+  mobile-web:
+    build: ./mobile
+    restart: unless-stopped
+    environment:
+      EXPO_PUBLIC_API_URL: http://localhost:8000/api
+    ports:
+      - "8081:80"
+    depends_on:
+      - api
+    profiles:
+      - web
+
+volumes:
+  pgdata:
