@@ -47,7 +47,8 @@ php artisan serve
 - Backend: Auth, Cities, Places, Hostels, Bookings (server-side total + 12% commission), Favorites (real, not stub).
 - Filament: 5 complete resources with forms, tables and List/Create/Edit pages.
 - Docker + PostgreSQL: compose file, Dockerfiles and seeder ready.
-- Still pending (needs you): GitHub repo creation + install (push blocked by 403), Figma PNG export (Starter MCP limit), first `docker compose up` on your machine.
+- Pushed to GitHub: https://github.com/lagawebibrahim-wq/morocco-travel-app
+- Still pending (needs you): Figma PNG export (Starter MCP limit), first `docker compose up` on your machine.
 
 ## Screens (from Figma)
 Start Traveling, Explore, Map, City Detail, Place Detail, Hostels List,
